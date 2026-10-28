@@ -110,11 +110,7 @@ class DatabaseSettings(BaseSettings):
                 escaping it would connect to a differently named database.
         """
         if self.DATABASE_URL_OVERRIDE:
-            url = self.DATABASE_URL_OVERRIDE
-            for sync_prefix in ("postgresql://", "postgres://"):
-                if url.startswith(sync_prefix):
-                    url = self.POSTGRES_ASYNC_PREFIX + url[len(sync_prefix):]
-            return url
+            return self.DATABASE_URL_OVERRIDE
 
         unsafe = [character for character in DATABASE_NAME_RESERVED if character in self.POSTGRES_DB]
         if unsafe:
